@@ -18,6 +18,13 @@ spec:
         repoURL: 'https://github.com/morey-tech/argocd-example-apps'
         path: general/helm-guestbook
         targetRevision: HEAD
+        helm:
+          valuesObject:
+            replicaCount: 5
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 16Gi
       destination:
         namespace: helm-guestbook
         name: '{{name}}'
