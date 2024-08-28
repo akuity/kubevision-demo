@@ -1,0 +1,8 @@
+apiVersion: argocd.akuity.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: kubevision-demo
+spec:
+  description: "Declarative example."
+  instanceSpec: {}
+  version: v2.12.1
