@@ -20,7 +20,7 @@ spec:
         targetRevision: HEAD
         helm:
           valuesObject:
-            replicaCount: 5
+            replicaCount: 10
             resources:
               requests:
                 cpu: 1m
