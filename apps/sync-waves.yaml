@@ -20,7 +20,7 @@ spec:
         targetRevision: HEAD
       destination:
         namespace: sync-waves
-        name: {{name}}
+        name: '{{name}}'
       syncPolicy:
         automated:
           prune: true
