@@ -1,19 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: sync-waves
 spec:
-  project: default
-  source:
-    repoURL: 'https://github.com/morey-tech/argocd-example-apps'
-    path: general/sync-waves
-    targetRevision: HEAD
-  destination:
-    namespace: sync-waves
-    name: dev
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  generators:
+  - clusters:
+      selector:
+        matchExpressions:
+        # Don't deploy addons to cluster running Argo CD (i.e. the Akuity Platform).
+        - {key: 'akuity.io/argo-cd-cluster-name', operator: NotIn, values: [in-cluster]}
+  template:
+    metadata:
+      name: 'sync-waves-{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/morey-tech/argocd-example-apps'
+        path: general/sync-waves
+        targetRevision: HEAD
+      destination:
+        namespace: sync-waves
+        name: {{name}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
